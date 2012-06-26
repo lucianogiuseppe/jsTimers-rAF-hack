@@ -1,0 +1,29 @@
+<html>
+<head>
+	<title>timeOut-rAF hack example</title>
+	<script src="js/timeoutrafhack.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+	function test(str, str2){
+		alert(str+" "+str2);
+	}
+
+	function test2() {
+		this.m = "Ind the end!";
+		
+		this.c = function() {
+			alert(this.m);
+		};
+		
+		setTimeout(this.c.bind(this), 5000);
+	}
+
+
+	new test2();
+	var id = setTimeout(test, 5000, "hi", "folks");
+	setTimeout(test, 1000, "hi", "every body");
+	clearTimeout(id);
+	</script>
+</body>
+</html>
