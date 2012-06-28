@@ -1,10 +1,11 @@
 <html>
 <head>
-	<title>timeOut-rAF hack example 2: use adapters in my class</title>
+	<title>jsTimers-rAF hack example 2: use adapters in my class</title>
 	<script src="js/timeoutrafhack.js"></script>
 </head>
 <body>	
 	<script type="text/javascript">
+	
 
 	function testClass() {
 		this.message1 = "Hi!!";
@@ -12,12 +13,14 @@
 		this.message3 = "Watch?!?";
 		
 		//if browser supports requestAnimationFrame I use rAF hack adapters
+		this.myTimeout = undefined;
+		this.myClearTimeout = undefined;
 		if(trAfHack.rAFSupported() == true) {
 			this.myTimeout = trAfHack.setTimeout;
 			this.myClearTimeout = trAfHack.clearTimeout;
 		} else { 
-			this.myTimeout = window.setTimeOut;
-			this.myClearTimeout = window.clearTimeout;
+			this.myTimeout = function() {return window.setTimeout(arguments[0], arguments[1], Array.prototype.slice.call(arguments, 2));};
+			this.myClearTimeout = function(id) {window.clearTimeout(id);};
 		}
 			
 		this.alert = function(str) {
@@ -31,10 +34,15 @@
 		
 	}
 	
+	(function() {
+		if (navigator.appName == 'Microsoft Internet Explorer') {
+			alert("This example doesn't run on IE, open example_for_ie.html");
+			return;
+		}
 
-	
-	//try hacks
-	new testClass();
+		//try hacks
+		new testClass();
+	})();
 	
 	</script>
 </body>
