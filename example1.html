@@ -1,15 +1,16 @@
 <html>
 <head>
-	<title>jsTimers-rAF hack example: replace window method</title>
+	<title>timeOut-rAF hack example</title>
 	<script src="js/timeoutrafhack.js"></script>
 </head>
 <body>
-	<div id="writeHere"></div>
-	
 	<script type="text/javascript">
+	function test(str, str2){
+		alert(str+" "+str2);
+	}
 
-	function testClass() {
-		this.m = "I'm in the end!";
+	function test2() {
+		this.m = "Ind the end!";
 		
 		this.c = function() {
 			alert(this.m);
@@ -17,20 +18,12 @@
 		
 		setTimeout(this.c.bind(this), 5000);
 	}
-	
-	function testFunc(div, str) {
-		div.innerHTML += str + "<br/>";
-	}
 
-	//apply hacks
-	trAfHack.applyHacks();
-	
-	//try hacks
-	new testClass();
-	var div = document.querySelector("#writeHere");
-	var id = setInterval(testFunc, 300, div, "hi folks");
-	var id2 = setInterval(testFunc, 500, div, "hi");
-	setTimeout(function() {clearInterval(id);clearInterval(id2);}, 2000);	
+
+	new test2();
+	var id = setTimeout(test, 5000, "hi", "folks");
+	setTimeout(test, 1000, "hi", "every body");
+	clearTimeout(id);
 	</script>
 </body>
 </html>
