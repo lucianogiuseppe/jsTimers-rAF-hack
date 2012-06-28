@@ -1,0 +1,41 @@
+<html>
+<head>
+	<title>timeOut-rAF hack example 2: use adapters in my class</title>
+	<script src="js/timeoutrafhack.js"></script>
+</head>
+<body>	
+	<script type="text/javascript">
+
+	function testClass() {
+		this.message1 = "Hi!!";
+		this.message2 = "Byee!!";
+		this.message3 = "Watch?!?";
+		
+		//if browser supports requestAnimationFrame I use rAF hack adapters
+		if(trAfHack.rAFSupported() == true) {
+			this.myTimeout = trAfHack.setTimeout;
+			this.myClearTimeout = trAfHack.clearTimeout;
+		} else { 
+			this.myTimeout = window.setTimeOut;
+			this.myClearTimeout = window.clearTimeout;
+		}
+			
+		this.alert = function(str) {
+			alert(str);
+		};
+		
+		var id = this.myTimeout(this.alert.bind(this), 1000, this.message3);
+		this.myClearTimeout(id);
+		this.myTimeout(this.alert.bind(this), 1000, this.message1);
+		this.myTimeout(this.alert.bind(this), 1000, this.message2);
+		
+	}
+	
+
+	
+	//try hacks
+	new testClass();
+	
+	</script>
+</body>
+</html>
