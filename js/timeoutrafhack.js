@@ -1,5 +1,5 @@
 /* 
-* setTimeOut-rAF hack by Luciano Giuseppe
+* jsTimers-rAF hack by Luciano Giuseppe
 * Replace javascript timer methods with others that use requestAnimationFrame
 * 
 * v. 0.2
