@@ -1,7 +1,7 @@
 /*!
  * jsTimers-rAF hack by Luciano Giuseppe
  * Replace javascript timer methods with others that use requestAnimationFrame 
- * v. 0.2
+ * v. 0.3
  */
 
 
@@ -66,6 +66,12 @@ window.trAfHack =  {
 		
 		return true;
 	},
+	
+	//get the start time of timer
+	getStartTime : function() {
+		//Paul Irish  http://updates.html5rocks.com/2012/05/requestAnimationFrame-API-now-with-sub-millisecond-precision
+		return (window.performance && window.performance.now) ?(performance.now() + performance.timing.navigationStart) : Date.now();
+	},
 
 	/*
 	 * setTimeout hack
@@ -114,8 +120,7 @@ window.trAfHack =  {
 			this.callback.apply(this.callback, this.params);
 		};
 		
-		//Paul Irish  http://updates.html5rocks.com/2012/05/requestAnimationFrame-API-now-with-sub-millisecond-precision
-		this.rAFStartTime = window.performance.now ?(performance.now() + performance.timing.navigationStart) : Date.now();	
+		this.rAFStartTime = this.getStartTime();
 		this.rAFID = requestAnimationFrame(this.loop.bind(this));
 		
 		return this;
@@ -169,12 +174,11 @@ window.trAfHack =  {
 			this.callback.apply(this.callback, this.params);
 			
 			//restart
-			this.rAFStartTime = window.performance.now ?(performance.now() + performance.timing.navigationStart) : Date.now();	
+			this.rAFStartTime = this.getStartTime();
 			this.rAFID =  requestAnimationFrame(this.loop.bind(this));
 		};
 		
-		//Paul Irish  http://updates.html5rocks.com/2012/05/requestAnimationFrame-API-now-with-sub-millisecond-precision
-		this.rAFStartTime = window.performance.now ?(performance.now() + performance.timing.navigationStart) : Date.now();	
+		this.rAFStartTime = this.getStartTime();
 		this.rAFID = requestAnimationFrame(this.loop.bind(this));
 		
 		return this;
