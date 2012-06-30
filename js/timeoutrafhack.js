@@ -120,7 +120,7 @@ window.trAfHack =  {
 			this.callback.apply(this.callback, this.params);
 		};
 		
-		this.rAFStartTime = this.getStartTime();
+		this.rAFStartTime = trAfHack.getStartTime();
 		this.rAFID = requestAnimationFrame(this.loop.bind(this));
 		
 		return this;
@@ -174,11 +174,11 @@ window.trAfHack =  {
 			this.callback.apply(this.callback, this.params);
 			
 			//restart
-			this.rAFStartTime = this.getStartTime();
+			this.rAFStartTime = trAfHack..getStartTime();
 			this.rAFID =  requestAnimationFrame(this.loop.bind(this));
 		};
 		
-		this.rAFStartTime = this.getStartTime();
+		this.rAFStartTime = trAfHack.getStartTime();
 		this.rAFID = requestAnimationFrame(this.loop.bind(this));
 		
 		return this;
