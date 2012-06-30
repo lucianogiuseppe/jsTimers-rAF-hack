@@ -21,6 +21,9 @@
 		} else { 
 			this.myTimeout = window.setTimeout.bind(window);
 			this.myClearTimeout = window.clearTimeout.bind(window);
+			/* on old iphone safari use this
+			this.myTimeout = function() {return window.setTimeout(arguments[0], arguments[1], Array.prototype.slice.call(arguments, 2));};
+			this.myClearTimeout = function(id) {window.clearTimeout(id);};*/
 		}
 		
 		this.alert = function(str) {
