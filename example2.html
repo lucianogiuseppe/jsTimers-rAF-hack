@@ -5,8 +5,8 @@
 </head>
 <body>	
 	<script type="text/javascript">
-	
 
+	//exemple class
 	function testClass() {
 		this.message1 = "Hi!!";
 		this.message2 = "Byee!!";
@@ -19,10 +19,10 @@
 			this.myTimeout = trAfHack.setTimeout;
 			this.myClearTimeout = trAfHack.clearTimeout;
 		} else { 
-			this.myTimeout = function() {return window.setTimeout(arguments[0], arguments[1], Array.prototype.slice.call(arguments, 2));};
-			this.myClearTimeout = function(id) {window.clearTimeout(id);};
+			this.myTimeout = window.setTimeout.bind(window);
+			this.myClearTimeout = window.clearTimeout.bind(window);
 		}
-			
+		
 		this.alert = function(str) {
 			alert(str);
 		};
