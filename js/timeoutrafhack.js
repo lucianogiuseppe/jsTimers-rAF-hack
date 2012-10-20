@@ -1,13 +1,14 @@
 /*!
  * jsTimers-rAF hack by Luciano Giuseppe
  * Replace javascript timer methods with others that use requestAnimationFrame 
- * v. 0.3
+ * v. 0.4
  */
 
 
 (function(window) {
 
 window.trAfHack =  {
+	isIE10 : (navigator.appVersion.indexOf("MSIE 10")!=-1),
 
 	//call this function that apply hacks at js timer functions
 	applyHacks : function() {
@@ -69,6 +70,7 @@ window.trAfHack =  {
 	
 	//get the start time of timer
 	getStartTime : function() {
+		if(trAfHack.isIE10) return performance.now();
 		//Paul Irish  http://updates.html5rocks.com/2012/05/requestAnimationFrame-API-now-with-sub-millisecond-precision
 		return (window.performance && window.performance.now) ?(performance.now() + performance.timing.navigationStart) : Date.now();
 	},
@@ -174,7 +176,7 @@ window.trAfHack =  {
 			this.callback.apply(this.callback, this.params);
 			
 			//restart
-			this.rAFStartTime = trAfHack..getStartTime();
+			this.rAFStartTime = trAfHack.getStartTime();
 			this.rAFID =  requestAnimationFrame(this.loop.bind(this));
 		};
 		
