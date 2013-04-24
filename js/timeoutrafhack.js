@@ -1,7 +1,7 @@
 /*!
  * jsTimers-rAF hack by Luciano Giuseppe
  * Replace javascript timer methods with others that use requestAnimationFrame 
- * v. 0.4
+ * v. 0.5
  */
 
 
@@ -28,7 +28,7 @@ window.trAfHack =  {
 
 	//Control if requestAnimationFrame is supported by browser
 	rAFSupported : function() {
-		//Erik Möller https://gist.github.com/1579671
+		//Erik MÃ¶ller https://gist.github.com/1579671
 		var vendors = ['ms', 'moz', 'webkit', 'o'];
 		for(var x = 0; x < vendors.length && window.requestAnimationFrame===undefined; ++x) {
 			window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
@@ -68,8 +68,8 @@ window.trAfHack =  {
 		return true;
 	},
 	
-	//get the start time of timer
-	getStartTime : function() {
+	//get the time of browser timer
+	getTime : function() {
 		if(trAfHack.isIE10) return performance.now();
 		//Paul Irish  http://updates.html5rocks.com/2012/05/requestAnimationFrame-API-now-with-sub-millisecond-precision
 		return (window.performance && window.performance.now) ?(performance.now() + performance.timing.navigationStart) : Date.now();
@@ -113,7 +113,7 @@ window.trAfHack =  {
 		//Called every ~16ms until delay is expired
 		this.loop = function(timestamp) {
 			//Wait the delay time
-			if((timestamp - this.rAFStartTime) < this.delay) {
+			if((trAfHack.getTime() - this.rAFStartTime) < this.delay) {
 				this.rAFID =  requestAnimationFrame(this.loop.bind(this));
 				return;
 			}
@@ -122,7 +122,7 @@ window.trAfHack =  {
 			this.callback.apply(this.callback, this.params);
 		};
 		
-		this.rAFStartTime = trAfHack.getStartTime();
+		this.rAFStartTime = trAfHack.getTime();
 		this.rAFID = requestAnimationFrame(this.loop.bind(this));
 		
 		return this;
@@ -167,7 +167,7 @@ window.trAfHack =  {
 		//Called every ~16ms until delay is expired
 		this.loop = function(timestamp) {
 			//Wait the delay time
-			if((timestamp - this.rAFStartTime) < this.delay) {
+			if((trAfHack.getTime() - this.rAFStartTime) < this.delay) {
 				this.rAFID =  requestAnimationFrame(this.loop.bind(this));
 				return;
 			}
@@ -176,11 +176,11 @@ window.trAfHack =  {
 			this.callback.apply(this.callback, this.params);
 			
 			//restart
-			this.rAFStartTime = trAfHack.getStartTime();
+			this.rAFStartTime = trAfHack.getTime();
 			this.rAFID =  requestAnimationFrame(this.loop.bind(this));
 		};
 		
-		this.rAFStartTime = trAfHack.getStartTime();
+		this.rAFStartTime = trAfHack.getTime();
 		this.rAFID = requestAnimationFrame(this.loop.bind(this));
 		
 		return this;
