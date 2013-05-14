@@ -1,7 +1,7 @@
 /*!
  * jsTimers-rAF hack by Luciano Giuseppe
  * Replace javascript timer methods with others that use requestAnimationFrame 
- * v. 0.5
+ * v. 0.5.5
  */
 
 
@@ -28,14 +28,16 @@ window.trAfHack =  {
 
 	//Control if requestAnimationFrame is supported by browser
 	rAFSupported : function() {
-		//Erik Möller https://gist.github.com/1579671
+		//based on Erik Möller code (https://gist.github.com/1579671)
 		var vendors = ['ms', 'moz', 'webkit', 'o'];
-		for(var x = 0; x < vendors.length && window.requestAnimationFrame===undefined; ++x) {
-			window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-			window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+		for(var x = 0; x < vendors.length && (window.requestAnimationFrame===undefined || window.cancelAnimationFrame === undefined); ++x) {
+			if(window.requestAnimationFrame === undefined)
+				window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+			if(window.cancelAnimationFrame === undefined)
+				window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
 		}
 
-		if (window.requestAnimationFrame==undefined)
+		if (window.requestAnimationFrame === undefined || window.cancelAnimationFrame === undefined)
 			return false;
 		
 		
