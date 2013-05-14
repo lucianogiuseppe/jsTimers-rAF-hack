@@ -65,16 +65,31 @@ window.trAfHack =  {
 		  
 			return fBound;  
 		  };  
-		} 
+		}
+
+		this.set_getTime();
 		
 		return true;
 	},
 	
 	//get the time of browser timer
-	getTime : function() {
-		if(trAfHack.isIE10) return performance.now();
+	set_getTime : function() {
+		if(trAfHack.isIE10) {
+			trAfHack.getTime = function() {
+							return performance.now();
+			}; 
+		} 
+		
 		//Paul Irish  http://updates.html5rocks.com/2012/05/requestAnimationFrame-API-now-with-sub-millisecond-precision
-		return (window.performance && window.performance.now) ?(performance.now() + performance.timing.navigationStart) : Date.now();
+		else if (window.performance && window.performance.now) {
+			trAfHack.getTime  = function() {
+						return (performance.now() + performance.timing.navigationStart);
+					    }
+		 } else { 
+			trAfHack.getTime = function() {
+						return Date.now(); 
+					    }; 
+		 }
 	},
 
 	/*
