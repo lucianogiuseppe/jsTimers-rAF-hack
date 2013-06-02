@@ -2,6 +2,9 @@ jsTimers-rAF hack by Luciano Giuseppe
 Replaces javascript timer methods with others that use requestAnimationFrame.
 jsTimers-rAF hack is useful if you want use requestAnimationFrame into your scripts without change the code or if you want to use a own version of setTimeout and setInterval methods.
 
+v 0.6 
+The hack checks Date.now def. otherwise it uses getTime method (for old browser)
+
 v 0.5.5
 Find independently requestAnimationFrame and cancelAnimationFrame browser methods
 
